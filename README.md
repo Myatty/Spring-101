@@ -13,3 +13,7 @@ This repository is where I will upload all my projects related to the Java Sprin
 - **IDE**: Spring Tool Suite
 
 
+## Dependencies Used
+- **Spring Web**
+- **Lombok**
+-
