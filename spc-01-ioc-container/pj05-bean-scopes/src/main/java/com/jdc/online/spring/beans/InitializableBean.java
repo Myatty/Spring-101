@@ -34,11 +34,15 @@ public class InitializableBean implements InitializingBean, DisposableBean{
 	public void destroy() throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("Destroy");
-
-		
 	}
 
-
+	public void init() {
+		System.out.println("Init method");
+	}
+	
+	public void cleanUp() {
+		System.out.println("Cleanup method");
+	}
 
 	
 }
