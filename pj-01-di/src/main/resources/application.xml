@@ -14,7 +14,7 @@
     	<constructor-arg ref="service"></constructor-arg>
     </bean>
     
-    <bean id="client1" class="com.jdc.online.spring.di.MyClient">
+    <bean id="client2" class="com.jdc.online.spring.di.MyClient">
     	<constructor-arg ref="service"></constructor-arg>
     </bean>
 
