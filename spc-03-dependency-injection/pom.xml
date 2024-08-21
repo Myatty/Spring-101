@@ -43,5 +43,6 @@
 
 	<modules>
 		<module>pj-01-explicit-wiring</module>
+		<module>pj-02-di-java</module>
 	</modules>
 </project>
