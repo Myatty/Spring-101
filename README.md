@@ -19,6 +19,7 @@ This repository contains my personal projects and lessons for learning the Java 
 
 - **Spring Framework**: `spring-context` `spring-test` (version 6.1.11)
 - **JUnit 5**: `junit-jupiter` (version 5.10.3)
+- **Project Lombok**: (version 1.18.34)
 - **H2 Database**: (version 2.3.232)
 
 ## Java Version
