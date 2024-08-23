@@ -45,5 +45,6 @@
 		<module>pj-01-explicit-wiring</module>
 		<module>pj-02-di-java</module>
 		<module>pj-03-autowired-xml</module>
+		<module>pj-04-autowired-annotation</module>
 	</modules>
 </project>
