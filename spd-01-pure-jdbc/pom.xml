@@ -28,5 +28,6 @@
   </build>
   <modules>
   	<module>pj-01-pure-jdbc</module>
+  	<module>pj-02-spring-jdbc-xml</module>
   </modules>
 </project>
