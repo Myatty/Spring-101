@@ -12,24 +12,27 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import com.jdc.spring.jdbc.dto.AccountDto;
 import com.jdc.spring.jdbc.dto.AccountFrom;
 
-public class AccountDaoImpl implements AccountDao{
+public class AccountDaoImpl implements AccountDao {
 	
 	private JdbcTemplate template;
 	private RowMapper<AccountDto> rowMapper;
-	
+
 	public AccountDaoImpl(DataSource dataSource) {
 		template = new JdbcTemplate(dataSource);
-		rowMapper = new DataClassRowMapper<>(AccountDto.class); // When sql's column names and JAVA record names are identical
+		rowMapper = new DataClassRowMapper<>(AccountDto.class);
 	}
-
+	
 	@Override
-	public int insert(AccountFrom from) {
-		var sql = "INSERT INTO ACCOUNT (name, phone) VALUES (?, ?);";
+	public int insert(AccountFrom form) {
+
 		var keys = new GeneratedKeyHolder();
+		
 		template.update(con -> {
-			var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			stmt.setString(1, from.name());
-			stmt.setString(2, from.phone());
+			var stmt = con.prepareStatement("insert into ACCOUNT (name, phone) values (?, ?)", 
+					Statement.RETURN_GENERATED_KEYS);
+			
+			stmt.setString(1, form.name());
+			stmt.setString(2, form.phone());
 			
 			return stmt;
 		}, keys);
@@ -39,14 +42,19 @@ public class AccountDaoImpl implements AccountDao{
 
 	@Override
 	public long count() {
-		return template.queryForObject("SELECT count(id) FROM ACCOUNT", Long.class);
+		return template
+			.queryForObject("select count(id) from ACCOUNT", Long.class);
 	}
 
 	@Override
 	public AccountDto findById(int id) {
-		var sql = "SELECT count(id) FROM ACCOUNT WHERE id = ?";
-		return template.queryForObject(sql, rowMapper, id);
+		var list = template.query("select * from ACCOUNT where id = ?", rowMapper, id);
+		
+		if(list.size() > 0) {
+			return list.get(0);
+		}
+		
+		return null;
 	}
-
 
 }

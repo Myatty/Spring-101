@@ -1,98 +1,68 @@
 package com.jdc.spring.jdbc.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.sql.SQLException;
-
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.springframework.context.support.GenericXmlApplicationContext;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.jdc.spring.jdbc.dto.AccountFrom;
 
-
+@SpringJUnitConfig(locations = "classpath:/application.xml")
+@TestMethodOrder(value = OrderAnnotation.class)
 public class AccountDaoTest {
-
-	static GenericXmlApplicationContext context;
-
-	@BeforeAll
-	static void beforeAll() {
-		context = new GenericXmlApplicationContext("classpath:/application.xml");
-	}
 	
-
+	@Autowired
+	private AccountDao dao;
+	
 	@Order(1)
 	@ParameterizedTest
 	@CsvSource({
-		"Myint Myat, 0942461324, 1",
-		"Your Dad, 0932423424, 2",
-		"Your Mom, 09324234, 3"
+		"Aung Aung,0911112222,1",
+		"Thidar,0911112223,2",
+		"Nilar,0911112224,3",
 	})
 	void test_insert(String name, String phone, int expectedId) {
-		var from = new AccountFrom(name, phone);
-		var id = dao.create(from);
-		assertEquals(expectedId, id)
-				
+		var form = new AccountFrom(name, phone);
+		var id = dao.insert(form);
+		assertEquals(expectedId, id);
 	}
 	
-	@Order(2)
 	@Test
+	@Order(2)
 	void test_select_count() {
-
-	    var sql = "select count(*) from ACCOUNT";
-
-	    try (var stmt = connection.prepareStatement(sql)) {
-
-	        var rs = stmt.executeQuery();
-
-	        if (rs.next()) {
-	            var count = rs.getLong(1);
-	            assertEquals(3L, count);
-	        }
-
-	    } catch (SQLException e) {
-	        e.printStackTrace(); // Print the SQL error for easier debugging
-	        fail("SQL execution failed: " + e.getMessage()); // Fail the test if SQL fails
-	    }
+		var count = dao.count();
+		assertEquals(3, count);
 	}
-
-
+	
 	@Order(3)
 	@ParameterizedTest
 	@CsvSource({
-		"Myint Myat, 0942461324, 1",
-		"Your Dad, 0932423424, 2",
-		"Your Mom, 09324234, 3"
+		"Aung Aung,0911112222,1",
+		"Thidar,0911112223,2",
+		"Nilar,0911112224,3",
 	})
 	void test_find_by_id(String name, String phone, int id) {
 		
-		var sql = "SELECT * FROM  ACCOUNT where id = ? ";
-		
-		try( var stmt = connection.prepareStatement(sql)){
-			
-			stmt.setInt(1, id);
-			
-			var rs = stmt.executeQuery();
-			
-			if(rs.next()) {
-				var nameColumn = rs.getString("name");
-				var phoneColumn = rs.getString("phone");
-				
-				assertEquals(name , nameColumn);
-				assertEquals(phone , phoneColumn);
-				
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		var dto = dao.findById(id);
+		assertEquals(name, dto.name());
+		assertEquals(phone, dto.phone());
 	}
-
+	
+	@Order(4)
+	@ParameterizedTest
+	@ValueSource(ints = {0, 4, 5})
+	void test_find_by_id_not_found(int id) {
+		
+		var dto = dao.findById(id);
+		assertNull(dto);
 	}
+	
 }
