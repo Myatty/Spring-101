@@ -25,7 +25,7 @@ public class AccountDaoTest {
 	@Order(1)
 	@ParameterizedTest
 	@CsvSource({
-		"Aung Aung,0911112222,1",
+		"Myint Myat,0911112222,1",
 		"Thidar,0911112223,2",
 		"Nilar,0911112224,3",
 	})
@@ -45,7 +45,7 @@ public class AccountDaoTest {
 	@Order(3)
 	@ParameterizedTest
 	@CsvSource({
-		"Aung Aung,0911112222,1",
+		"Myint Myat,0911112222,1",
 		"Thidar,0911112223,2",
 		"Nilar,0911112224,3",
 	})
