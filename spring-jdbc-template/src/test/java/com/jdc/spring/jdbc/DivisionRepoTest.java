@@ -27,4 +27,12 @@ public class DivisionRepoTest {
 		var result = repo.search(name);
 		asssertEquals(size, result.size());
 	}
+	
+	@ParameterizedTest
+	@CsvSource({
+		
+	})
+	void test_find_by_id(int id, String name, long districts) {
+		
+	}
 }
