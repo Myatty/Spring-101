@@ -25,7 +25,7 @@ public class DivisionRepoTest {
 	void test_search(String name , int size) {
 		
 		var result = repo.search(name);
-		asssertEquals(size, result.size());
+		assertEquals(size, result.size());
 	}
 	
 	@ParameterizedTest
