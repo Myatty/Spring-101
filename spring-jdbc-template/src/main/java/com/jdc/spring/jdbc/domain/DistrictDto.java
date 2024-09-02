@@ -5,6 +5,7 @@ public record DistrictDto(
 		String name,
 		int divisionId,
 		String divisionName,
-		long townships) {
+		long townships
+		) {
 
 }
