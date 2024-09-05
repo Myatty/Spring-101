@@ -13,7 +13,7 @@ This repository contains my personal projects and lessons for learning the Java 
 
 - **Pure JDBC** (`spd-01-pure-jdbc`)
   - A basic exploration of JDBC with H2 database integration.
-  - (This shows how frustrating it is to write without using Spring Framework for Databases. This reminds me of my Java EE learning Phase at Sem 4)
+  - (This shows how frustrating it is to write without using Spring Framework for DatabasesThis reminds me of my Java EE learning Phase at Sem 4)
 
 ## Dependencies
 
